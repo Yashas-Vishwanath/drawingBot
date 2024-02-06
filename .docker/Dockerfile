@@ -37,6 +37,7 @@ RUN pip3 install --no-cache-dir --upgrade pip\
     pylint \
     numpy \
     opencv-python \
+    opencv-contrib-python \
     pyquaternion \
     python-dateutil \
     matplotlib \
@@ -142,18 +143,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
 # git repos/packages installed in the workspace outside the docker
 
 
-## for Point cloud generation
-FROM tbot as pointcloud
-WORKDIR /
-RUN apt-get update && apt-get install -y --no-install-recommends\
-    ros-$ROS_DISTRO-pcl-ros \
-    pcl-tools \
-    ros-$ROS_DISTRO-octomap \
-    ros-$ROS_DISTRO-octomap-mapping \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-
-FROM pointcloud as open3d
+FROM tbot as open3d
 
 RUN pip3 install --no-cache-dir --upgrade open3d
 
