@@ -6,7 +6,7 @@ Chess_Board_Dimensions = (9, 6)
 n = 0  # image counter
 
 # checks images dir is exist or not
-image_path = "images"
+image_path = "distance_estimation/3.camera_calibration/images"
 
 Dir_Check = os.path.isdir(image_path)
 
