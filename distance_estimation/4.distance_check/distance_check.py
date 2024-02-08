@@ -13,7 +13,10 @@ dist_coef = calib_data["distCoef"]
 r_vectors = calib_data["rVector"]
 t_vectors = calib_data["tVector"]
 
-MARKER_SIZE = 6  # centimeters (measure your printed marker size)
+# in centimeters (measure your printed marker size)
+MARKER_SIZE = 7.93  # 7x7_1000 300pixels
+# MARKER_SIZE = 10.57 # 7x7_1000 400pixels
+# MARKER_SIZE = 13.20 # 7x7_1000 500pixels
 
 marker_dict = aruco.getPredefinedDictionary(aruco.DICT_7X7_1000)
 
