@@ -8,6 +8,56 @@ import matplotlib.pyplot as plt
 img = cv2.imread('process_pgm/scans/playground.pgm', cv2.IMREAD_GRAYSCALE)
 # img = cv2.resize(img, (0, 0), fx=5, fy=5) # only to view. dont use this for the actual vectorization
 
+
+
+####### load the resolution and origin from yaml file #######
+# Open the YAML file
+with open('process_pgm/scans/playground.yaml', 'r') as file:
+    lines = file.readlines()
+
+    # Initialize variables for resolution and origin
+    resolution = None
+    origin = None
+
+    # Loop through the lines of the YAML file
+    for line in lines:
+        # Check if the line contains the resolution parameter
+        if line.startswith("resolution:"):
+            resolution = float(line.split(":")[1].strip())
+        
+        # Check if the line contains the origin parameter
+        elif line.startswith("origin:"):
+            origin_values = line.split(":")[1].strip().split(',')
+            origin_values = [value.strip().replace('[', '').replace(']', '') for value in origin_values]
+            origin = [float(value) for value in origin_values]
+
+# Check if resolution and origin were successfully extracted
+if resolution is not None:
+    print("Resolution:", resolution)
+else:
+    print("Resolution not found or invalid.")
+
+if origin is not None:
+    print("Origin:", origin)
+else:
+    print("Origin not found or invalid.")
+
+
+
+# calculate the width and height of the image in meters
+width_m = img.shape[1] * resolution
+height_m = img.shape[0] * resolution
+
+# calculate the x and y coordinates of the origin in meters
+origin_m = [origin[0] * resolution, origin[1] * resolution]
+
+# print the width, height, and origin in meters
+print("Width (m):", width_m)
+print("Height (m):", height_m)
+print("Origin (m):", origin_m)
+
+
+
 # threshold the image to create a binary image
 _, binary_image = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
 
@@ -36,9 +86,6 @@ cv2.imshow('canvas', canvas)
 cv2.imshow('original', img)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
-
-# # view the canvas with the contours drawn on it
-# plt.imshow(canvas, cmap='gray', origin='upper')
 
 
 
@@ -77,11 +124,11 @@ ax.set_axis_off()
 ax.invert_yaxis()
 
 # export the svg before viewing otherwise the svg will be blank
-plt.savefig('process_pgm/exports/playground.svg', format='svg', dpi=1200, bbox_inches='tight')
+plt.savefig('process_pgm/exports/playground3.svg', format='svg', dpi=1200, bbox_inches='tight', pad_inches=0)
 
 plt.show()
 
-# # save the canvas as a vector image
-# cv2.imwrite('process_pgm/exports/playground_fill.svg', canvas)
-# cv2.imwrite('process_pgm/exports/playground_original.png', img)
-# cv2.imwrite('process_pgm/exports/playground_binary.png', binary_image)
+
+# # # save the canvas as a vector image
+# # cv2.imwrite('process_pgm/exports/playground_original.png', img)
+# # cv2.imwrite('process_pgm/exports/playground_binary.png', binary_image)
