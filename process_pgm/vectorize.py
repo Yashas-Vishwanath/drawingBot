@@ -42,7 +42,7 @@ cv2.destroyAllWindows()
 
 
 
-##### save the contours in .svg using matplotlib #########
+######## save the contours in .svg using matplotlib #########
 
 # specify minimum contour area to remove small noise
 min_contour_area = 0
@@ -76,9 +76,10 @@ ax.set_axis_off()
 # invert the y-axis
 ax.invert_yaxis()
 
-plt.show()
+# export the svg before viewing otherwise the svg will be blank
+plt.savefig('process_pgm/exports/playground.svg', format='svg', dpi=1200, bbox_inches='tight')
 
-plt.savefig('process_pgm/exports/playground.svg', bbox_inches='tight', pad_inches=0)
+plt.show()
 
 # # save the canvas as a vector image
 # cv2.imwrite('process_pgm/exports/playground_fill.svg', canvas)
