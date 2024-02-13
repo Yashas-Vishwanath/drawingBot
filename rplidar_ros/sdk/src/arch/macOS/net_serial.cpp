@@ -36,7 +36,6 @@
 #include "arch/macOS/net_serial.h"
 #include <termios.h>
 #include <sys/select.h>
-#include <IOKit/serial/ioss.h>
 
 namespace rp{ namespace arch{ namespace net{
 
@@ -80,8 +79,16 @@ bool raw_serial::open(const char * portname, uint32_t baudrate, uint32_t flags)
     tcgetattr(serial_fd, &oldopt);
 	bzero(&options,sizeof(struct termios));
 
-    cfsetspeed(&options, B19200);
+    _u32 termbaud = getTermBaudBitmap(baudrate);
 
+    if (termbaud == (_u32)-1) {
+        fprintf(stderr, "Baudrate %d is not supported on macOS\r\n", baudrate);
+        close();
+        return false;
+    }
+    cfsetispeed(&options, termbaud);
+    cfsetospeed(&options, termbaud);
+	
 	// enable rx and tx
 	options.c_cflag |= (CLOCAL | CREAD);
 
@@ -104,23 +111,19 @@ bool raw_serial::open(const char * portname, uint32_t baudrate, uint32_t flags)
     options.c_oflag &= ~OPOST;
     
     tcflush(serial_fd,TCIFLUSH); 
-
+/*
+    if (fcntl(serial_fd, F_SETFL, FNDELAY))
+    {
+        close();
+        return false;
+    }
+*/
     if (tcsetattr(serial_fd, TCSANOW, &options))
     {
         close();
         return false;
     }
-	
-    printf("Setting serial port baudrate...\n");
     
-    speed_t speed = (speed_t)baudrate;
-    if (ioctl(serial_fd, IOSSIOSPEED, &speed)== -1) {
-        printf("Error calling ioctl(..., IOSSIOSPEED, ...) %s - %s(%d).\n",
-               portname, strerror(errno), errno);
-        close();
-        return false;
-    }
-
     _is_serial_opened = true;
 
     //Clear the DTR bit to let the motor spin
@@ -138,7 +141,7 @@ void raw_serial::close()
     _is_serial_opened = false;
 }
 
-int raw_serial::senddata(const unsigned char * data, size_t size)
+int raw_serial::senddata(const unsigned char * data, _word_size_t size)
 {
 // FIXME: non-block io should be used
     if (!isOpened()) return 0;
@@ -161,7 +164,8 @@ int raw_serial::senddata(const unsigned char * data, size_t size)
 }
 
 
-int raw_serial::recvdata(unsigned char * data, size_t size)
+
+int raw_serial::recvdata(unsigned char * data, _word_size_t size)
 {
     if (!isOpened()) return 0;
     
@@ -178,13 +182,13 @@ void raw_serial::flush( _u32 flags)
     tcflush(serial_fd,TCIFLUSH); 
 }
 
-int raw_serial::waitforsent(_u32 timeout, size_t * returned_size)
+int raw_serial::waitforsent(_u32 timeout, _word_size_t * returned_size)
 {
     if (returned_size) *returned_size = required_tx_cnt;
     return 0;
 }
 
-int raw_serial::waitforrecv(_u32 timeout, size_t * returned_size)
+int raw_serial::waitforrecv(_u32 timeout, _word_size_t * returned_size)
 {
     if (!isOpened() ) return -1;
    
@@ -192,10 +196,10 @@ int raw_serial::waitforrecv(_u32 timeout, size_t * returned_size)
     return 0;
 }
 
-int raw_serial::waitfordata(size_t data_count, _u32 timeout, size_t * returned_size)
+int raw_serial::waitfordata(_word_size_t data_count, _u32 timeout, _word_size_t * returned_size)
 {
-    size_t length = 0;
-    if (returned_size==NULL) returned_size=(size_t *)&length;
+    _word_size_t length = 0;
+    if (returned_size==NULL) returned_size=(_word_size_t *)&length;
     *returned_size = 0;
     
     int max_fd;
@@ -213,12 +217,7 @@ int raw_serial::waitfordata(size_t data_count, _u32 timeout, size_t * returned_s
 
     if ( isOpened() )
     {
-        int nread;
-
-        if ( ioctl(serial_fd, FIONREAD, &nread) == -1) return ANS_DEV_ERR;
-
-        *returned_size = nread;
-
+        if ( ioctl(serial_fd, FIONREAD, returned_size) == -1) return ANS_DEV_ERR;
         if (*returned_size >= data_count)
         {
             return 0;
@@ -233,13 +232,11 @@ int raw_serial::waitfordata(size_t data_count, _u32 timeout, size_t * returned_s
         if (n < 0)
         {
             // select error
-            *returned_size =  0;
             return ANS_DEV_ERR;
         }
         else if (n == 0)
         {
             // time out
-            *returned_size =0;
             return ANS_TIMEOUT;
         }
         else
@@ -253,11 +250,16 @@ int raw_serial::waitfordata(size_t data_count, _u32 timeout, size_t * returned_s
             {
                 return 0;
             }
+            else
+            {
+                int remain_timeout = timeout_val.tv_sec*1000000 + timeout_val.tv_usec;
+                int expect_remain_time = (data_count - *returned_size)*1000000*8/_baudrate;
+                if (remain_timeout > expect_remain_time)
+                    usleep(expect_remain_time);
+            }
         }
         
     }
-
-    *returned_size=0;
     return ANS_DEV_ERR;
 }
 
