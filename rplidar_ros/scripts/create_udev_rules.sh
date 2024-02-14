@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "remap the device serial port(ttyUSBX) to  rplidar"
+echo "remap the device serial port(ttyUSB1) to  rplidar"
 echo "rplidar usb connection as /dev/rplidar , check it using the command : ls -l /dev|grep ttyUSB"
 echo "start copy rplidar.rules to  /etc/udev/rules.d/"
 echo "`rospack find rplidar_ros`/scripts/rplidar.rules"
