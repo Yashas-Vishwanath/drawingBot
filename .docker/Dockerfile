@@ -109,12 +109,11 @@ RUN ["/bin/bash", "-c", "git clone https://github.com/orbbec/ros_astra_camera.gi
 
 
 
-## for TurtleBot
+## for TurtleBot and lidar
 FROM astra as tbot
 WORKDIR /
 RUN apt-get update && apt-get install -y --no-install-recommends\
     ros-$ROS_DISTRO-rviz \
-    ros-$ROS_DISTRO-xacro \
     ros-$ROS_DISTRO-rosbash \
     ros-$ROS_DISTRO-rqt-action \
     ros-$ROS_DISTRO-rqt-console \
@@ -137,6 +136,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
     ros-$ROS_DISTRO-common-msgs \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# from vince docker file for lidar
+RUN apt-get update && apt-get install -y --no-install-recommends\
+    ros-$ROS_DISTRO-ecl-threads \
+    ros-$ROS_DISTRO-ecl-geometry \
+    ros-$ROS_DISTRO-ecl-streams \
+    ros-$ROS_DISTRO-kdl-conversions \
+    ros-$ROS_DISTRO-usb-cam \
+    ros-$ROS_DISTRO-rplidar-ros \
+    ros-$ROS_DISTRO-diagnostics \
+    ros-$ROS_DISTRO-kobuki-core \
+    ros-$ROS_DISTRO-kobuki-dock-drive \
+    ros-$ROS_DISTRO-image-transport-plugins \
+    ros-$ROS_DISTRO-theora-image-transport \
+    ros-$ROS_DISTRO-rosbridge-suite \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # WORKDIR /dev_ws/src
 # git repos/packages installed in the workspace outside the docker
@@ -146,11 +160,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
 # git repos/packages installed in the workspace outside the docker
 
 
-FROM tbot as open3d
+# FROM tbot as open3d
 
-RUN pip3 install --no-cache-dir --upgrade open3d
+# RUN pip3 install --no-cache-dir --upgrade open3d
 
-FROM open3d as build
+FROM tbot as build
 
 COPY . /dev_ws/src/
 
