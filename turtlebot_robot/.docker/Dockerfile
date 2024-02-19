@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
     cmake \
     python3-pip \
     python3-flake8 \
+    python-is-python3 \
     terminator \
     tmux \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
