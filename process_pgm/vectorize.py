@@ -5,14 +5,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # load the .pgm image
-img = cv2.imread('process_pgm/scans/playground.pgm', cv2.IMREAD_GRAYSCALE)
+img = cv2.imread('captures/Maps/workflow1.pgm', cv2.IMREAD_GRAYSCALE)
 # img = cv2.resize(img, (0, 0), fx=5, fy=5) # only to view. dont use this for the actual vectorization
 
 
 
 ####### load the resolution and origin from yaml file #######
 # Open the YAML file
-with open('process_pgm/scans/playground.yaml', 'r') as file:
+with open('captures/Maps/workflow1.yaml', 'r') as file:
     lines = file.readlines()
 
     # Initialize variables for resolution and origin
@@ -124,7 +124,7 @@ ax.set_axis_off()
 ax.invert_yaxis()
 
 # export the svg before viewing otherwise the svg will be blank
-plt.savefig('process_pgm/exports/playground3.svg', format='svg', dpi=1200, bbox_inches='tight', pad_inches=0)
+plt.savefig('process_pgm/exports/workflow1.svg', format='svg', dpi=1200, bbox_inches='tight', pad_inches=0)
 
 plt.show()
 
