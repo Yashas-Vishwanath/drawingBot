@@ -21,6 +21,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
     python-is-python3 \
     terminator \
     tmux \
+    nano \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update && apt-get install -y --no-install-recommends\
