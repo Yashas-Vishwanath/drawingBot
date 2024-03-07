@@ -5,7 +5,7 @@ from nav_msgs.msg import Odometry
 
 #PUBLISHERS
 def cmd_pub(lin_x:float, lin_y:float, rot_z: float) -> None:
-    cmd_vel_pub = rospy.Publisher('/mobile_base/commands/velocity', Twist, queue_size=10)
+    cmd_vel_pub = rospy.Publisher('/cmd_vel_mux/input/navi', Twist, queue_size=10)
     cmd_vel = Twist()
     cmd_vel.linear.x = lin_x
     cmd_vel.linear.y = lin_y
