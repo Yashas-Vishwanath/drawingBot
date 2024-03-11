@@ -1,0 +1,32 @@
+ssh iaac@192.168.11.79 - was 54
+
+ssh iaac@iaac-turtle
+
+code /etc/hosts
+
+------------------------------------------------------------------------------------------
+
+export ROS_MASTER_URI=http://192.168.11.79:11311    ## nuc ip
+export ROS_HOSTNAME=192.168.11.190    ## my laptop ip
+export ROS_IP=192.168.11.190    ## my laptop ip
+## this is done on my laptop cause the master is running on nuc
+
+export ROS_MASTER_URI=http://192.168.11.79:11311    ## nuc ip
+export ROS_IP=192.168.11.79
+## on the nuc we run this
+
+
+WHEN WORKING WITH ETHERNET CABLE:
+
+ssh iaac@192.168.1.1
+
+export ROS_MASTER_URI=http://192.168.1.1:11311  ## nuc ip
+export ROS_HOSTNAME=192.168.1.3    ## my laptop ip
+export ROS_IP=192.168.1.3    ## my laptop ip
+
+
+docker ps
+
+docker exec -it 064b9099dcef bash
+source devel/setup.bash
+
