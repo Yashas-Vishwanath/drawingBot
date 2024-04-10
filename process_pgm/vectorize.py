@@ -9,7 +9,6 @@ img = cv2.imread('captures/Maps/workflow1.pgm', cv2.IMREAD_GRAYSCALE)
 # img = cv2.resize(img, (0, 0), fx=5, fy=5) # only to view. dont use this for the actual vectorization
 
 
-
 ####### load the resolution and origin from yaml file #######
 # Open the YAML file
 with open('captures/Maps/workflow1.yaml', 'r') as file:
