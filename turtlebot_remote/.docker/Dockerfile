@@ -64,6 +64,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
     ros-$ROS_DISTRO-rosbridge-suite \
     ros-$ROS_DISTRO-rosbridge-server \
     ros-$ROS_DISTRO-tf2-web-republisher \
+    ros-$ROS_DISTRO-rosserial \
+    ros-$ROS_DISTRO-rosserial-arduino \
+    ros-$ROS_DISTRO-rosserial-python \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /
