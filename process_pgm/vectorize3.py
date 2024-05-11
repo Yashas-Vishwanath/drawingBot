@@ -5,12 +5,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # load the .pgm image
-img = cv2.imread('captures/Maps/workflow1.pgm', cv2.IMREAD_GRAYSCALE)
+img = cv2.imread('captures/Maps/4may.pgm', cv2.IMREAD_GRAYSCALE)
 
 
 ####### load the resolution and origin from yaml file #######
 # Open the YAML file
-with open('captures/Maps/workflow1.yaml', 'r') as file:
+with open('captures/Maps/4may.yaml', 'r') as file:
     lines = file.readlines()
 
     # Initialize variables for resolution and origin
@@ -152,7 +152,7 @@ ax.axis('off')
 ax.invert_yaxis()
 
 # save the plot as an .svg file in the exports folder
-plt.savefig('process_pgm/exports/workflow_cross.svg', format='svg', bbox_inches='tight')
+plt.savefig('process_pgm/exports/4may_cross.svg', format='svg', bbox_inches='tight')
 
 # display the plot
 plt.show()

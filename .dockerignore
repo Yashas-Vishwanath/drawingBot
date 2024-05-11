@@ -1,3 +1,4 @@
 # .dockerignore
 captures/
 Debugs/
+turtlebot_remote/.docker/setup.bash
