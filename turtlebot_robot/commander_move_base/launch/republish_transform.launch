@@ -1,4 +1,0 @@
-<launch>
-  <node name="transform_publisher" pkg="commander_move_base" type="customScripts/republish_transform.py" output="screen"/>
-</launch>
-

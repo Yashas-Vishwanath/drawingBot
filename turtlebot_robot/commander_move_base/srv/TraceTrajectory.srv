@@ -1,4 +1,0 @@
-moveit_msgs/RobotTrajectory trajectory
-string end_effector_link
----
-bool success

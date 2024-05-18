@@ -1,5 +1,0 @@
-Goal[] goals
-float32[] blends
----
-bool success
-bool configuration_change
