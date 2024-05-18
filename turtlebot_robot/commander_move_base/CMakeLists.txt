@@ -159,13 +159,12 @@ include_directories(
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-catkin_install_python(PROGRAMS
-  src/customScripts/republish_transform.py
+# catkin_install_python(PROGRAMS
 #   src/commander_move_base/commander_node.py
 #   src/commander_move_base/visualize_poses_srv.py
 #   src/commander_move_base/trace_trajectory_srv.py
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+# )
 
 ## Mark executables for installation
 ## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_executables.html
