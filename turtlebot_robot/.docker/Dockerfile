@@ -67,12 +67,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
     ros-$ROS_DISTRO-rosserial \
     ros-$ROS_DISTRO-rosserial-arduino \
     ros-$ROS_DISTRO-rosserial-python \
+    ros-$ROS_DISTRO-tf2 \
+    ros-$ROS_DISTRO-tf2-ros \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /
 RUN mkdir -p dev_ws/src
 
 COPY . /dev_ws/src/
+
+RUN chmod +x /dev_ws/src/commander_move_base/src/customScripts/*.py
 
 WORKDIR /dev_ws
 RUN ["/bin/bash", "-c", "source /opt/ros/$ROS_DISTRO/setup.bash &&\
