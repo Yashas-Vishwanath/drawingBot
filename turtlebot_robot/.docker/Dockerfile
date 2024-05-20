@@ -79,38 +79,38 @@ COPY . /dev_ws/src/
 # Ensure the script is executable
 RUN chmod +x /dev_ws/src/turtlebot/turtlebot_bringup/scripts/republish_transform.py
 
-# WORKDIR /dev_ws
-# RUN ["/bin/bash", "-c", "source /opt/ros/$ROS_DISTRO/setup.bash &&\
-#     catkin config --cmake-args -DCMAKE_BUILD_TYPE=Release &&\
-#     catkin build \
-#     "]
+WORKDIR /dev_ws
+RUN ["/bin/bash", "-c", "source /opt/ros/$ROS_DISTRO/setup.bash &&\
+    catkin config --cmake-args -DCMAKE_BUILD_TYPE=Release &&\
+    catkin build \
+    "]
 
-# RUN ["/bin/bash", "-c", "cp /dev_ws/src/.docker/entrypoint.sh /entrypoint.sh && chmod 777 /entrypoint.sh"]
-# RUN ["/bin/bash", "-c", "cp /dev_ws/src/.docker/setup.bash /dev_ws/setup.bash && chmod 777 /dev_ws/setup.bash"]
-# ENTRYPOINT ["bash", "/entrypoint.sh" ]
+RUN ["/bin/bash", "-c", "cp /dev_ws/src/.docker/entrypoint.sh /entrypoint.sh && chmod 777 /entrypoint.sh"]
+RUN ["/bin/bash", "-c", "cp /dev_ws/src/.docker/setup.bash /dev_ws/setup.bash && chmod 777 /dev_ws/setup.bash"]
+ENTRYPOINT ["bash", "/entrypoint.sh" ]
 
 # RUN chmod 666 /dev/ttyACM0
 
-# CMD ["bash"]
-
-# Set the working directory
-WORKDIR /dev_ws
-
-# Source ROS and build the workspace
-RUN /bin/bash -c "source /opt/ros/noetic/setup.bash && \
-    catkin config --cmake-args -DCMAKE_BUILD_TYPE=Release && \
-    catkin build"
-
-# Copy the entrypoint script and set permissions
-COPY /dev_ws/src/.docker/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-# Copy the setup script and set permissions
-COPY /dev_ws/src/.docker/setup.bash /dev_ws/setup.bash
-RUN chmod +x /dev_ws/setup.bash
-
-# Set the entrypoint
-ENTRYPOINT ["/entrypoint.sh"]
-
-# Default command
 CMD ["bash"]
+
+# # Set the working directory
+# WORKDIR /dev_ws
+
+# # Source ROS and build the workspace
+# RUN /bin/bash -c "source /opt/ros/noetic/setup.bash && \
+#     catkin config --cmake-args -DCMAKE_BUILD_TYPE=Release && \
+#     catkin build"
+
+# # Copy the entrypoint script and set permissions
+# COPY /dev_ws/src/.docker/entrypoint.sh /entrypoint.sh
+# RUN chmod +x /entrypoint.sh
+
+# # Copy the setup script and set permissions
+# COPY /dev_ws/src/.docker/setup.bash /dev_ws/setup.bash
+# RUN chmod +x /dev_ws/setup.bash
+
+# # Set the entrypoint
+# ENTRYPOINT ["/entrypoint.sh"]
+
+# # Default command
+# CMD ["bash"]
