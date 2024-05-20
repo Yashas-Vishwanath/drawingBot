@@ -78,7 +78,6 @@ COPY . /dev_ws/src/
 
 # Ensure the script is executable
 RUN chmod +x /dev_ws/src/turtlebot/turtlebot_bringup/scripts/republish_transform.py
-RUN chmod 666 /dev/ttyACM0
 
 WORKDIR /dev_ws
 RUN ["/bin/bash", "-c", "source /opt/ros/$ROS_DISTRO/setup.bash &&\
@@ -89,5 +88,7 @@ RUN ["/bin/bash", "-c", "source /opt/ros/$ROS_DISTRO/setup.bash &&\
 RUN ["/bin/bash", "-c", "cp /dev_ws/src/.docker/entrypoint.sh /entrypoint.sh && chmod 777 /entrypoint.sh"]
 RUN ["/bin/bash", "-c", "cp /dev_ws/src/.docker/setup.bash /dev_ws/setup.bash && chmod 777 /dev_ws/setup.bash"]
 ENTRYPOINT ["bash", "/entrypoint.sh" ]
+
+RUN chmod 666 /dev/ttyACM0
 
 CMD ["bash"]
