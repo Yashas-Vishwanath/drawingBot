@@ -85,8 +85,18 @@ RUN ["/bin/bash", "-c", "source /opt/ros/$ROS_DISTRO/setup.bash &&\
     catkin build \
     "]
 
-RUN ["/bin/bash", "-c", "cp /dev_ws/src/.docker/entrypoint.sh /entrypoint.sh && chmod 777 /entrypoint.sh"]
-RUN ["/bin/bash", "-c", "cp /dev_ws/src/.docker/setup.bash /dev_ws/setup.bash && chmod 777 /dev_ws/setup.bash"]
-ENTRYPOINT ["bash", "/entrypoint.sh" ]
+# Copy entrypoint script and set permissions
+COPY /dev_ws/src/.docker/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+COPY /dev_ws/src/.docker/setup.bash /dev_ws/setup.bash
+RUN chmod +x /dev_ws/setup.bash
+
+# Set entrypoint
+ENTRYPOINT ["/entrypoint.sh"]
+
+#RUN ["/bin/bash", "-c", "cp /dev_ws/src/.docker/entrypoint.sh /entrypoint.sh && chmod 777 /entrypoint.sh"]
+#RUN ["/bin/bash", "-c", "cp /dev_ws/src/.docker/setup.bash /dev_ws/setup.bash && chmod 777 /dev_ws/setup.bash"]
+#ENTRYPOINT ["bash", "/entrypoint.sh" ]
 
 CMD ["bash"]
