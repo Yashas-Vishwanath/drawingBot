@@ -78,6 +78,7 @@ COPY . /dev_ws/src/
 
 # Ensure the script is executable
 RUN chmod +x /dev_ws/src/turtlebot/turtlebot_bringup/scripts/republish_transform.py
+RUN chmod +x /dev_ws/src/turtlebot/turtlebot_bringup/scripts/setup_permissions.sh
 
 WORKDIR /dev_ws
 RUN ["/bin/bash", "-c", "source /opt/ros/$ROS_DISTRO/setup.bash &&\
