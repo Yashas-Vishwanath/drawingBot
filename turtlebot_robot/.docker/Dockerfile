@@ -71,6 +71,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
     ros-$ROS_DISTRO-tf2-ros \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# Create a new user (replace "dockeruser" with your actual user)
+RUN useradd -m -s /bin/bash iaac
+RUN echo 'iaac:iaac' | chpasswd
+RUN adduser iaac sudo
+
+# Allow the user to run chmod without a password
+RUN echo "iaac ALL=(ALL) NOPASSWD: /bin/chmod 666 /dev/ttyACM0" >> /etc/sudoers
+
+# Switch to the new user
+USER iaac
+
+# Copy the rest of your setup files and scripts here
 WORKDIR /
 RUN mkdir -p dev_ws/src
 
