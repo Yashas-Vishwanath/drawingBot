@@ -69,6 +69,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
     ros-$ROS_DISTRO-rosserial-python \
     ros-$ROS_DISTRO-tf2 \
     ros-$ROS_DISTRO-tf2-ros \
+    ros-$ROS_DISTRO-robot_localization \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Create a new user (replace "dockeruser" with your actual user)
@@ -90,7 +91,7 @@ COPY . /dev_ws/src/
 
 # Ensure the script is executable
 RUN chmod +x /dev_ws/src/turtlebot/turtlebot_bringup/scripts/republish_transform.py
-RUN chmod +x /dev_ws/src/turtlebot/turtlebot_bringup/scripts/setup_permissions.sh
+#RUN chmod +x /dev_ws/src/turtlebot/turtlebot_bringup/scripts/setup_permissions.sh
 
 WORKDIR /dev_ws
 RUN ["/bin/bash", "-c", "source /opt/ros/$ROS_DISTRO/setup.bash &&\

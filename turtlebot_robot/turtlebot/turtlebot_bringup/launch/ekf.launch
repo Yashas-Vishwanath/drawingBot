@@ -1,0 +1,6 @@
+<launch>
+  <!-- Load the robot_localization configuration -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_node" output="screen">
+    <param name="config" textfile="$(find turtlebot_bringup)/config/ekf.yaml"/>
+  </node>
+</launch>
