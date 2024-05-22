@@ -1,6 +1,6 @@
 ARG ROS_DISTRO=noetic
 
-FROM ros:$ROS_DISTRO-ros-base
+FROM ros:$ROS_DISTRO-ros-base as base
 
 ARG ROS_DISTRO
 
@@ -69,6 +69,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
     ros-$ROS_DISTRO-rosserial-python \
     ros-$ROS_DISTRO-tf2 \
     ros-$ROS_DISTRO-tf2-ros \
+    ros-$ROS_DISTRO-robot-localization \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Create a new user (replace "dockeruser" with your actual user)
@@ -86,10 +87,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
 WORKDIR /
 RUN mkdir -p dev_ws/src
 
-RUN git clone -b $ROS_DISTRO-devel https://github.com/cra-ros-pkg/robot_localization.git
+#RUN git clone -b $ROS_DISTRO-devel https://github.com/cra-ros-pkg/robot_localization.git /dev_ws/src/robot_localization
+
 
 COPY . /dev_ws/src/
 
+#WORKDIR /dev_ws/src
+#RUN mkdir robot_localization
 #RUN git clone -b $ROS_DISTRO-devel https://github.com/cra-ros-pkg/robot_localization.git
 
 # Ensure the script is executable
