@@ -86,9 +86,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
 WORKDIR /
 RUN mkdir -p dev_ws/src
 
+RUN git clone -b $ROS_DISTRO-devel https://github.com/cra-ros-pkg/robot_localization.git
+
 COPY . /dev_ws/src/
 
-RUN git clone -b $ROS_DISTRO-devel https://github.com/cra-ros-pkg/robot_localization.git
+#RUN git clone -b $ROS_DISTRO-devel https://github.com/cra-ros-pkg/robot_localization.git
 
 # Ensure the script is executable
 RUN chmod +x /dev_ws/src/turtlebot/turtlebot_bringup/scripts/republish_transform.py
