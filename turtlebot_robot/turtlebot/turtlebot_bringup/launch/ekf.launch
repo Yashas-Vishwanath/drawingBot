@@ -1,8 +1,68 @@
 <launch>
   <!-- Load the robot_localization configuration -->
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_node" output="screen">
-    <rosparam command="load" file="$(find robot_localization)/params/ekf_template.yaml"/>
-    <param name="imu0" value="mobile_base/sensors/imu_data"/>
-    <param name="odom0" value="odom"/>
+    <!-- General parameters -->
+    <param name="two_d_mode" value="true"/>
+    <param name="map_frame" value="map"/>
+    <param name="odom_frame" value="odom"/>
+    <param name="base_link_frame" value="base_link"/>
+    <param name="world_frame" value="odom"/>
+    <param name="publish_tf" value="true"/>
+    <param name="print_diagnostics" value="true"/>
+    
+    <!-- Odometry parameters -->
+    <param name="odom0" value="/odom"/>
+    <param name="odom0_config" value="[true,  true,  false,
+                                      false, false, true,
+                                      true,  false, false,
+                                      false, false, true,
+                                      false, false, false]"/>
+    <param name="odom0_queue_size" value="2"/>
+    <param name="odom0_differential" value="false"/>
+    <param name="odom0_relative" value="false"/>
+
+    <!-- IMU parameters -->
+    <param name="imu0" value="/mobile_base/sensors/imu_data"/>
+    <param name="imu0_config" value="[false, false, false,
+                                     true,  true,  true,
+                                     false, false, false,
+                                     true,  true,  true,
+                                     true,  true,  true]"/>
+    <param name="imu0_queue_size" value="5"/>
+    <param name="imu0_remove_gravitational_acceleration" value="true"/>
+
+    <!-- Process noise covariance -->
+    <param name="process_noise_covariance" value="[0.06,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+                                                      0,    0.06, 0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+                                                      0,    0,    0.0,  0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+                                                      0,    0,    0,    0.03, 0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+                                                      0,    0,    0,    0,    0.03, 0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+                                                      0,    0,    0,    0,    0,    0.06, 0,     0,     0,    0,    0,    0,    0,    0,    0,
+                                                      0,    0,    0,    0,    0,    0,    0.025, 0,     0,    0,    0,    0,    0,    0,    0,
+                                                      0,    0,    0,    0,    0,    0,    0,     0.025, 0,    0,    0,    0,    0,    0,    0,
+                                                      0,    0,    0,    0,    0,    0,    0,     0,     0.0,  0,    0,    0,    0,    0,    0,
+                                                      0,    0,    0,    0,    0,    0,    0,     0,     0,    0.01, 0,    0,    0,    0,    0,
+                                                      0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0.01, 0,    0,    0,    0,
+                                                      0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0.02, 0,    0,    0,
+                                                      0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0.01, 0,    0,
+                                                      0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0.01, 0,
+                                                      0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0.015]"/>
+
+    <!-- Initial estimate covariance -->
+    <param name="initial_estimate_covariance" value="[1e-9,   0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+                                                        0,    1e-9, 0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+                                                        0,    0,    1e-9, 0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+                                                        0,    0,    0,    1e-9, 0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+                                                        0,    0,    0,    0,    1e-9, 0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+                                                        0,    0,    0,    0,    0,    1e-9, 0,    0,    0,    0,     0,     0,     0,    0,    0,
+                                                        0,    0,    0,    0,    0,    0,    1e-9, 0,    0,    0,     0,     0,     0,    0,    0,
+                                                        0,    0,    0,    0,    0,    0,    0,    1e-9, 0,    0,     0,     0,     0,    0,    0,
+                                                        0,    0,    0,    0,    0,    0,    0,    0,    1e-9, 0,     0,     0,     0,    0,    0,
+                                                        0,    0,    0,    0,    0,    0,    0,    0,    0,    1e-9,  0,     0,     0,    0,    0,
+                                                        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     1e-9,  0,     0,    0,    0,
+                                                        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     1e-9,  0,    0,    0,
+                                                        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     1e-9, 0,    0,
+                                                        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    1e-9, 0,
+                                                        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    1e-9]"/>
   </node>
 </launch>
