@@ -69,7 +69,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
     ros-$ROS_DISTRO-rosserial-python \
     ros-$ROS_DISTRO-tf2 \
     ros-$ROS_DISTRO-tf2-ros \
-    ros-$ROS_DISTRO-robot_localization \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Create a new user (replace "dockeruser" with your actual user)
@@ -88,6 +87,8 @@ WORKDIR /
 RUN mkdir -p dev_ws/src
 
 COPY . /dev_ws/src/
+
+RUN git clone -b $ROS_DISTRO-devel https://github.com/cra-ros-pkg/robot_localization.git
 
 # Ensure the script is executable
 RUN chmod +x /dev_ws/src/turtlebot/turtlebot_bringup/scripts/republish_transform.py
