@@ -14,11 +14,11 @@
     
     <!-- Odometry parameters -->
     <param name="odom0" value="/odom"/>
-    <param name="odom0_config" value="[true,  true,  false,
-                                      false, false, true,
-                                      true,  false, false,
-                                      false, false, true,
-                                      false, false, false]"/>
+    <rosparam param="odom0_config">[true,  true,  false,
+                                    false, false, true,
+                                    true,  false, false,
+                                    false, false, true,
+                                    false, false, false]</rosparam>
     <param name="odom0_queue_size" value="2"/>
     <param name="odom0_differential" value="false"/>
     <param name="odom0_relative" value="false"/>
