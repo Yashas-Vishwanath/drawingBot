@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-map_name = 'simpleScan1'
+map_name = 'space11'
 
 # load the .pgm image
 img = cv2.imread('captures/Maps/'+map_name+'.pgm', cv2.IMREAD_GRAYSCALE)
