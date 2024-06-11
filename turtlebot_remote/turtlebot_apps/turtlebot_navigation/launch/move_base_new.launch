@@ -1,5 +1,9 @@
 <launch>
+  <!-- Declare the odom_topic argument with a default value -->
+  <arg name="odom_topic" default="odom"/>
+
+  <!-- Include the main move_base launch file and pass the odom_topic argument -->
   <include file="$(find turtlebot_navigation)/launch/includes/move_base.launch.xml">
-    <arg name="odom_topic" value="/odometry/filtered"/>
+    <arg name="odom_topic" value="$(arg odom_topic)"/>
   </include>
 </launch>
