@@ -1,0 +1,18 @@
+<launch>
+
+  <!-- Run the map server -->
+  <arg name="map_file" default="/home/yashas/drawingBot/captures/Maps/space11.yaml"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+
+  <!--- Remap /odom to /odometry/filtered globally -->
+  <group>
+    <remap from="odom" to="/odometry/filtered"/>
+    <!--- Run AMCL -->
+    <include file="$(find turtlebot_navigation)/launch/amcl.launch" />
+    <!--- Run Move Base -->
+    <include file="$(find turtlebot_navigation)/launch/move_base_new.launch">
+      <arg name="odom_topic" value="/odometry/filtered"/>
+    </include>
+  </group>
+
+</launch>
