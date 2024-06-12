@@ -26,5 +26,10 @@
 
   <!-- TF Static Transform Publisher -->
   <node pkg="tf2_ros" type="static_transform_publisher" name="base_link_to_base_footprint" args="0 0 0 0 0 0 base_footprint base_link" />
+  <node pkg="tf2_ros" type="static_transform_publisher" name="odom_to_base_footprint" args="0 0 0 0 0 0 odom base_footprint" />
+  <node pkg="tf2_ros" type="static_transform_publisher" name="map_to_odom" args="0 0 0 0 0 0 map odom" />
+
+  <!-- Increase transform timeout -->
+  <param name="transform_timeout" value="5.0"/>
 
 </launch>
