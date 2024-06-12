@@ -67,6 +67,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
     ros-$ROS_DISTRO-rosserial \
     ros-$ROS_DISTRO-rosserial-arduino \
     ros-$ROS_DISTRO-rosserial-python \
+    ros-$ROS_DISTRO-laser-filters \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /

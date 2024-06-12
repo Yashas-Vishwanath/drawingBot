@@ -3,6 +3,13 @@
   <arg name="map_file" default="/home/iaac/drawingBot/captures/Maps/space11.yaml"/>
   <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
+  <!-- Run Laser Filters -->
+  <node pkg="nodelet" type="nodelet" name="laser_filter" args="standalone laser_filters/ScanShadowsFilterNodelet">
+    <rosparam command="load" file="$(find turtlebot_navigation)/config/laser_filter.yaml" />
+    <remap from="scan" to="scan_raw" />
+    <remap from="scan_filtered" to="scan" />
+  </node>
+
   <!--- Run AMCL -->
   <include file="$(find turtlebot_navigation)/launch/amcl.launch">
     <arg name="use_map_topic" value="true"/>
