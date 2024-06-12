@@ -1,0 +1,7 @@
+<launch>
+  <!-- Include the main AMCL and navigation launch file -->
+  <include file="$(find turtlebot_navigation)/launch/amcl_demo_iaac.launch" />
+
+  <!-- Run the AMCL pose republisher -->
+  <node pkg="turtlebot_navigation" type="republish_amcl_pose.py" name="amcl_republisher" output="screen"/>
+</launch>

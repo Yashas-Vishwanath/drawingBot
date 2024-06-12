@@ -1,7 +1,7 @@
 <launch>
 
   <!-- Run the map server -->
-  <arg name="map_file" default="/home/yashas/drawingBot/captures/Maps/april28.yaml"/>
+  <arg name="map_file" default="/home/paco/drawingBot/captures/Maps/space11.yaml"/>
   <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
   <!--- Run AMCL -->

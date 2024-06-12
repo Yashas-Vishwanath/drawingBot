@@ -74,6 +74,8 @@ RUN mkdir -p dev_ws/src
 
 COPY . /dev_ws/src/
 
+RUN chmod +x /dev_ws/src/turtlebot_apps/turtlebot_navigation/scripts/republish_amcl_pose.py
+
 WORKDIR /dev_ws
 RUN ["/bin/bash", "-c", "source /opt/ros/$ROS_DISTRO/setup.bash &&\
     catkin config --cmake-args -DCMAKE_BUILD_TYPE=Release &&\
