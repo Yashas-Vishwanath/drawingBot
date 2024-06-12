@@ -73,6 +73,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
 WORKDIR /
 RUN mkdir -p dev_ws/src
 
+RUN git clone -b $ROS_DISTRO-devel https://github.com/ros-perception/laser_filters.git /dev_ws/src/laser_filters
+
 COPY . /dev_ws/src/
 
 RUN chmod +x /dev_ws/src/turtlebot_apps/turtlebot_navigation/scripts/republish_amcl_pose.py
