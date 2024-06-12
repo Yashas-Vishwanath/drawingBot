@@ -1,5 +1,21 @@
-<launch>
+<!--launch>
 
   <include file="$(find turtlebot_navigation)/launch/includes/move_base.launch.xml"/>
 
+</launch-->
+
+<launch>
+  <arg name="odom_frame_id" default="odom"/>
+  <arg name="base_frame_id" default="base_footprint"/>
+  <arg name="global_frame_id" default="map"/>
+  <arg name="odom_topic" default="odom"/>
+  <arg name="laser_topic" default="scan"/>
+
+  <include file="$(find turtlebot_navigation)/launch/includes/move_base.launch.xml">
+    <arg name="odom_frame_id" value="$(arg odom_frame_id)"/>
+    <arg name="base_frame_id" value="$(arg base_frame_id)"/>
+    <arg name="global_frame_id" value="$(arg global_frame_id)"/>
+    <arg name="odom_topic" value="$(arg odom_topic)"/>
+    <arg name="laser_topic" value="$(arg laser_topic)"/>
+  </include>
 </launch>
