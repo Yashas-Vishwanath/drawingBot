@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-map_name = 'space11'
+map_name = 'mrac_scan1'
 
 # load the .pgm image
 img = cv2.imread('captures/Maps/'+map_name+'.pgm', cv2.IMREAD_GRAYSCALE)

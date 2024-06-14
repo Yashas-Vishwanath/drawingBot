@@ -7,8 +7,8 @@ code /etc/hosts
 ------------------------------------------------------------------------------------------
 
 export ROS_MASTER_URI=http://192.168.11.79:11311    ## nuc ip
-export ROS_HOSTNAME=192.168.11.141    ## my laptop ip
-export ROS_IP=192.168.11.141    ## my laptop ip
+export ROS_HOSTNAME=192.168.11.52   ## my laptop ip
+export ROS_IP=192.168.11.52    ## my laptop ip
 ## this is done on my laptop cause the master is running on nuc
 
 export ROS_MASTER_URI=http://192.168.11.79:11311    ## nuc ip
